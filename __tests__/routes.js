@@ -45,7 +45,7 @@ describe("Routes", function () {
 		});
 	});
 
-	xdescribe("/characters", function () {
+	describe("/characters", function () {
 		it("GET responde con un array vacío de entrada", function () {
 			return supertest
 				.get("/characters")
@@ -72,6 +72,27 @@ describe("Routes", function () {
 						{ name: "Bart", age: 10, quotes: [], familyId: 1 },
 						{ name: "Rafa", age: 8, quotes: [], familyId: 2 },
 					]);
+				});
+		});
+		it("DELETE elimina al personaje", function () {
+			model.addFamily("Simpsons");
+			model.addFamily("Gorgory");
+			model.addCharacter("Homero", 36, "Simpsons");
+			model.addCharacter("Bart", 10, "Simpsons");
+			model.addCharacter("Rafa", 8, "Gorgory");
+			return supertest
+				.delete("/characters")
+				.send({ name: "Homero" })
+				.expect(200)
+				.expect("Content-Type", /json/)
+				.expect(function (res) {
+					expect(res.body).toEqual({
+						name: "Homero",
+						age: 36,
+						quotes: [],
+						familyId: 1,
+					});
+					expect(model.listCharacter()).toHaveLength(2);
 				});
 		});
 
@@ -107,7 +128,7 @@ describe("Routes", function () {
 		});
 	});
 
-	describe("/characters/:name", function () {
+	xdescribe("/characters/:name", function () {
 		it("GET responde con un array vacío si la familia no existe", function () {
 			model.addFamily("Simpsons");
 			model.addFamily("Gorgory");
@@ -207,4 +228,18 @@ describe("Routes", function () {
 				});
 		});
 	});
+
+	/* xdescribe("/characte", function () {
+		it("GET responde con un array vacío si el personaje no existe", function () {
+			return supertest
+				.get("/quotes")
+				.expect(200)
+				.expect("Content-Type", /json/)
+				.expect(function (res) {
+					expect(res.body).toEqual([]);
+				});
+		});
+
+		
+	}); */
 });

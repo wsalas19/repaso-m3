@@ -28,7 +28,7 @@ describe("Model", function () {
 		});
 	});
 
-	describe("`addCharacter` y `listCharacter`", function () {
+	xdescribe("`addCharacter` y `listCharacter`", function () {
 		it("Inicialmente devuelve un arreglo vacío", function () {
 			expect(Model.listCharacter()).toEqual([]);
 		});

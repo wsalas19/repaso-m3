@@ -1,10 +1,10 @@
 "use strict";
 
-var characters = [];
+let characters = [];
 
 var families = [];
 
-var id = 1;
+/* var id = 1; */
 
 module.exports = {
 	reset: function () {
@@ -40,7 +40,6 @@ module.exports = {
 
 		if (family) {
 			return characters.filter((c) => {
-				console.log(families[c.familyId - 1]);
 				return families[c.familyId - 1] === family;
 			});
 		}
@@ -58,7 +57,7 @@ module.exports = {
 			characters.push(char);
 			return char;
 		}
-		throw new Error("La familia ingresada no existe");
+		return { msg: "La familia ingresada no existe" };
 	},
 	addQuote: function (name, quote) {
 		// Agrega una nueva frase a un personaje en particular con el formato:
@@ -78,5 +77,18 @@ module.exports = {
 		let char = characters.find((c) => c.name === name);
 		if (!char) return [];
 		return char.quotes;
+	},
+	deleteCharacter: function (name) {
+		//elimina al personaje pasado por parametro con nombre y devuelve error si se pasa un string vacio
+		let char = characters.find((c) => c.name === name);
+
+		if (name === "") return { msg: "el nombre no puede estar vacio" };
+		if (char) {
+			let filter = characters.filter((c) => c.name !== char.name);
+			characters = filter;
+
+			return char;
+		}
+		return { msg: "personaje no encontrado" };
 	},
 };
