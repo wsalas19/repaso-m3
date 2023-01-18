@@ -34,12 +34,15 @@ module.exports = {
 
 		if (pluckName && family) {
 			return characters
-				.filter((c) => families[index] === family)
+				.filter((c) => families[c.familyId - 1] === family)
 				.map((c) => c.name);
 		}
 
 		if (family) {
-			return characters.filter((c) => families[c.familyId + 1] === family);
+			return characters.filter((c) => {
+				console.log(families[c.familyId - 1]);
+				return families[c.familyId - 1] === family;
+			});
 		}
 		return characters;
 	},
@@ -63,8 +66,11 @@ module.exports = {
 		let char = characters.find((c) => c.name === name);
 		if (char) {
 			if (quote.text) {
-				char.quotes.push({ text: quote.text, season: quote.season || false });
+				let newQuote = { text: quote.text, season: quote.season || false };
+				char.quotes.push(newQuote);
+				return { msg: "Frase agregada correctamente" };
 			}
+			return "no se ha encotrado texto que agregar";
 		}
 	},
 	showQuotes: function (name) {

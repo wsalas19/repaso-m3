@@ -36,3 +36,11 @@ router.get("/characters/:name", (req, res) => {
 		res.status(200).json(models.listCharacter(name));
 	}
 });
+
+router.get("/quotes", (req, res) => {
+	res.status(200).send(models.showQuotes(req.body.name));
+});
+router.post("/quotes", (req, res) => {
+	const { name, quote } = req.body;
+	res.status(200).json(models.addQuote(name, quote));
+});

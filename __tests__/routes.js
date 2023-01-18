@@ -107,7 +107,7 @@ describe("Routes", function () {
 		});
 	});
 
-	xdescribe("/characters/:name", function () {
+	describe("/characters/:name", function () {
 		it("GET responde con un array vacío si la familia no existe", function () {
 			model.addFamily("Simpsons");
 			model.addFamily("Gorgory");
@@ -192,7 +192,10 @@ describe("Routes", function () {
 			model.addQuote("Homero", { text: "Marge, no voy a mentirte" });
 			return supertest
 				.post("/quotes")
-				.send({ name: "Homero", quote: "Na na na na na na na na na na Henry" })
+				.send({
+					name: "Homero",
+					quote: { text: "Na na na na na na na na na na Henry" },
+				})
 				.expect(200)
 				.expect("Content-Type", /json/)
 				.expect(function (res) {
