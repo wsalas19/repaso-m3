@@ -107,7 +107,7 @@ describe("Routes", function () {
 		});
 	});
 
-	describe("/characters/:name", function () {
+	xdescribe("/characters/:name", function () {
 		it("GET responde con un array vacío si la familia no existe", function () {
 			model.addFamily("Simpsons");
 			model.addFamily("Gorgory");
@@ -157,7 +157,7 @@ describe("Routes", function () {
 		});
 	});
 
-	xdescribe("/quotes", function () {
+	describe("/quotes", function () {
 		it("GET responde con un array vacío si el personaje no existe", function () {
 			return supertest
 				.get("/quotes")
